@@ -1,40 +1,86 @@
 package com.tugas.skripsi;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Genetika {
 
-    public String[][] pembangkitanPopulasi(int iterasi, int populasi, int jumlahperawat, int jumlahshift,
+    public String[][] pembangkitanPopulasi(HashMap<String,String> dataperawat,int iterasi, int populasi, int jumlahperawat, int jumlahshift,
                                            int jumlahperawatpershift) {
-
-        //kebutuhan perawat tiap hari = jumlah shift * butuh tiap tiap shift = 3 * 3 = 9
-        //kebutuhan perawat dalam 1 bulan = 9 * 30 = 270 gen
+        //pagi (3 shift) , siang (2 shift + 1 d), malam (2 shift)
+        //kebutuhan perawat tiap hari = 7
+        //kebutuhan perawat dalam 1 bulan = 7 * 30 = 210 gen
+        int totalperawat1shift = 3; // w/ padding 
+        int totalperawat1hari = (3 + 2 + 2);
+        int totalperawat1bulan = 30*totalperawat1hari;
+               
+        
+        Object[] perawatsArray = dataperawat.keySet().toArray();
 
         String chromosome[][] = new String[iterasi][populasi];
-        int[][] gen = new int[30 * jumlahshift][jumlahperawatpershift];
-        int[] perawat = new int[jumlahperawat];
+        String[][] gen = new String[totalperawat1bulan][totalperawat1shift];
+        int[] jumlahkerja_perawat = new int[jumlahperawat];
         for (int ulang = 0; ulang < populasi; ulang++) {
             chromosome[0][ulang] = "";
             for (int k = 0; k < jumlahperawat; k++) {
-                perawat[k] = 0;
+                jumlahkerja_perawat[k] = 0;
             }
-            for (int i = 0; i < 30 * jumlahshift; i++) {
-                for (int j = 0; j < jumlahperawatpershift; j++) {
+            for (int i = 0; i < 30; i++) { //loop harian
+                //shift pagi
+                for (int j = 0; j < totalperawat1shift; j++) {
                     int random;
                     boolean cek;
                     do {
                         random = (int) (Math.random() * jumlahperawat + 1);
-                        if (perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * jumlahperawatpershift / jumlahperawat) + 1) {
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
                             cek = false;
                         } else {
                             cek = true;
                         }
                     } while (cek);
-                    perawat[random - 1]++;
-                    gen[i][j] = random;
+                    jumlahkerja_perawat[random - 1]++;
+                    gen[i][j] = (String) perawatsArray[random - 1];
                     chromosome[0][ulang] += gen[i][j];
                     chromosome[0][ulang] += " ";
                 }
+
+                //shift siang
+                for (int j = 0; j < totalperawat1shift - 1; j++) {
+                    int random;
+                    boolean cek;
+                    do {
+                        random = (int) (Math.random() * jumlahperawat + 1);
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
+                            cek = false;
+                        } else {
+                            cek = true;
+                        }
+                    } while (cek);
+                    jumlahkerja_perawat[random - 1]++;
+                    gen[i][j] = (String)   perawatsArray[random - 1];
+                    chromosome[0][ulang] += gen[i][j];
+                    chromosome[0][ulang] += " ";
+                }
+                chromosome[0][ulang] += "_ ";
+
+                //shift sore
+                for (int j = 0; j < totalperawat1shift - 1; j++) {
+                    int random;
+                    boolean cek;
+                    do {
+                        random = (int) (Math.random() * jumlahperawat + 1);
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
+                            cek = false;
+                        } else {
+                            cek = true;
+                        }
+                    } while (cek);
+                    jumlahkerja_perawat[random - 1]++;
+                    gen[i][j] =  (String)  perawatsArray[random - 1];
+                    chromosome[0][ulang] += gen[i][j];
+                    chromosome[0][ulang] += " ";
+                }
+                chromosome[0][ulang] += "_ ";
             }
         }
         return chromosome;
@@ -45,6 +91,7 @@ public class Genetika {
         //antar shift
         int gen[][] = new int[30 * jumlahshift][jumlahperawatpershift];
         String[] kromosom = a.split(" ");
+        
         int cek[];
         cek = new int[kromosom.length];
         int pinalti1 = 0;

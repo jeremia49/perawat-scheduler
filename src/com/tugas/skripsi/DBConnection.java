@@ -24,11 +24,11 @@ public class DBConnection {
         return null;
     }
 
-    public static HashMap<Integer,String> getAllPerawat() throws Exception {
-        HashMap<Integer,String> perawat = new HashMap<Integer, String>();
+    public static HashMap<String,String> getAllPerawat() throws Exception {
+        HashMap<String,String> perawat = new HashMap<String, String>();
         ResultSet rs = getStatement().executeQuery("select * from perawat");
         while (rs.next()) {
-            perawat.put(Integer.parseInt(rs.getString("id_perawat")), rs.getString("nama_perawat"));
+            perawat.put(rs.getString("id_perawat"), rs.getString("nama_perawat"));
         }
         rs.close();
         return perawat;

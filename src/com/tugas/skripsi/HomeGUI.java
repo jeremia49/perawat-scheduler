@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author jerem
  */
 public class HomeGUI extends javax.swing.JFrame {
-    private static HashMap<Integer,String> dataperawathash;
+    private static HashMap<String,String> dataperawathash;
     private ArrayList<ArrayList<Populasi>> allPopulation;
     private ArrayList<Populasi> crossoverDanMutasi;
     private int individuCounter;
@@ -342,7 +342,7 @@ public class HomeGUI extends javax.swing.JFrame {
 
                 ArrayList<Populasi> population = new ArrayList<>();
                 {
-                    String[][] pops = new Genetika().pembangkitanPopulasi(inputiterasi, inputpopulationsize, dataperawathash.size(), 3, 3);
+                    String[][] pops = new Genetika().pembangkitanPopulasi(dataperawathash,inputiterasi, inputpopulationsize, dataperawathash.size(), 3, 3);
                     {
                         for (String pop : pops[0]) {
                             population.add(new Populasi(pop, 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter));
@@ -350,7 +350,6 @@ public class HomeGUI extends javax.swing.JFrame {
                         }
                     }
                 }
-
                 Collections.sort(population);
                 allPopulation.add((ArrayList<Populasi>) population.clone());
 
@@ -537,7 +536,7 @@ public class HomeGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(pane,"Gagal mengambil data dari database !", "Error", JOptionPane.ERROR_MESSAGE );
         }
 
-        for (int index : dataperawathash.keySet()) {
+        for (String index : dataperawathash.keySet()) {
             String value =  dataperawathash.get(index);
             Object[] a = new Object[2];
             a[0] = index;
