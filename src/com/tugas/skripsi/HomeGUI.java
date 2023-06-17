@@ -342,7 +342,7 @@ public class HomeGUI extends javax.swing.JFrame {
 
                 ArrayList<Populasi> population = new ArrayList<>();
                 {
-                    String[][] pops = new Genetika().pembangkitanPopulasi(dataperawathash,inputiterasi, inputpopulationsize, dataperawathash.size(), 3, 3);
+                    String[][] pops = new Genetika().pembangkitanPopulasi(dataperawathash,inputiterasi, inputpopulationsize, dataperawathash.size());
                     {
                         for (String pop : pops[0]) {
                             population.add(new Populasi(pop, 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter));

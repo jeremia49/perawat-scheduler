@@ -5,15 +5,14 @@ import java.util.HashMap;
 
 public class Genetika {
 
-    public String[][] pembangkitanPopulasi(HashMap<String,String> dataperawat,int iterasi, int populasi, int jumlahperawat, int jumlahshift,
-                                           int jumlahperawatpershift) {
+    public String[][] pembangkitanPopulasi(HashMap<String,String> dataperawat,int iterasi, int populasi, int jumlahperawat) {
         //pagi (3 shift) , siang (2 shift + 1 d), malam (2 shift)
         //kebutuhan perawat tiap hari = 7
         //kebutuhan perawat dalam 1 bulan = 7 * 30 = 210 gen
         int totalperawat1shift = 3; // w/ padding 
         int totalperawat1hari = (3 + 2 + 2);
         int totalperawat1bulan = 30*totalperawat1hari;
-               
+        int totalshift = 3;
         
         Object[] perawatsArray = dataperawat.keySet().toArray();
 
@@ -32,7 +31,7 @@ public class Genetika {
                     boolean cek;
                     do {
                         random = (int) (Math.random() * jumlahperawat + 1);
-                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * totalshift * totalperawat1shift / jumlahperawat) + 1) {
                             cek = false;
                         } else {
                             cek = true;
@@ -50,7 +49,7 @@ public class Genetika {
                     boolean cek;
                     do {
                         random = (int) (Math.random() * jumlahperawat + 1);
-                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * totalshift * totalperawat1shift / jumlahperawat) + 1) {
                             cek = false;
                         } else {
                             cek = true;
@@ -69,7 +68,7 @@ public class Genetika {
                     boolean cek;
                     do {
                         random = (int) (Math.random() * jumlahperawat + 1);
-                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * jumlahshift * totalperawat1shift / jumlahperawat) + 1) {
+                        if (jumlahkerja_perawat[random - 1] < (int) Math.ceil(30 * totalshift * totalperawat1shift / jumlahperawat) + 1) {
                             cek = false;
                         } else {
                             cek = true;
@@ -89,7 +88,7 @@ public class Genetika {
 
     public static int pinalti1(String a, int jumlahshift, int jumlahperawatpershift) {
         //antar shift
-        int gen[][] = new int[30 * jumlahshift][jumlahperawatpershift];
+        String gen[][] = new String[30 * jumlahshift][jumlahperawatpershift];
         String[] kromosom = a.split(" ");
         
         int cek[];
