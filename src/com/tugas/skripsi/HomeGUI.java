@@ -345,7 +345,7 @@ public class HomeGUI extends javax.swing.JFrame {
                     String[][] pops = new Genetika().pembangkitanPopulasi(dataperawathash,inputiterasi, inputpopulationsize, dataperawathash.size());
                     {
                         for (String pop : pops[0]) {
-                            population.add(new Populasi(pop, 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter));
+                            population.add(new Populasi(pop, dataperawathash, 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter));
                             individuCounter++;
                         }
                     }
@@ -384,14 +384,14 @@ public class HomeGUI extends javax.swing.JFrame {
 
                                 String mutasi = Genetika.mutasi(p1,p2,crossoverpop[i],3,3);
                                 offspringpop.add(mutasi);
-                                crossoverDanMutasi.add(new Populasi(crossoverpop[i], 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter, Integer.parseInt(bestParents[0].id),  Integer.parseInt(bestParents[1].id)));
+                                crossoverDanMutasi.add(new Populasi(crossoverpop[i],dataperawathash, 3, dataperawathash.size(), 3, idPerawatLibur, tanggalLibur, individuCounter, Integer.parseInt(bestParents[0].id),  Integer.parseInt(bestParents[1].id)));
                                 int p = individuCounter;
                                 individuCounter++;
-                                crossoverDanMutasi.add(new Populasi(mutasi, 3, dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter, p));
+                                crossoverDanMutasi.add(new Populasi(mutasi,dataperawathash, 3, dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter, p));
                                 individuCounter++;
                             }else{
                                 offspringpop.add(crossoverpop[i]);
-                                crossoverDanMutasi.add(new Populasi(crossoverpop[i], 3, dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter, Integer.parseInt(bestParents[0].id),  Integer.parseInt(bestParents[1].id)));
+                                crossoverDanMutasi.add(new Populasi(crossoverpop[i],dataperawathash, 3, dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter, Integer.parseInt(bestParents[0].id),  Integer.parseInt(bestParents[1].id)));
                                 individuCounter++;
                             }
                         }
@@ -401,7 +401,7 @@ public class HomeGUI extends javax.swing.JFrame {
                     for(int i = 0; i < offspringCount; i++){
                         Collections.sort(population);
                         population.remove(0);
-                        population.add(new Populasi(offspringpop.get(i), 3,dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter));
+                        population.add(new Populasi(offspringpop.get(i), dataperawathash,3,dataperawathash.size(),3, idPerawatLibur, tanggalLibur, individuCounter));
                         individuCounter++;
                     }
 
@@ -471,10 +471,10 @@ public class HomeGUI extends javax.swing.JFrame {
 
             Object[] row = new Object[6];
             row[0] = bestpop.gen;
-            row[1] = Genetika.pinalti1(bestpop.gen, 3, 3);
-            row[2] = Genetika.pinalti2(bestpop.gen, 3, 3, dataperawathash.size());
-            row[3] = Genetika.pinalti3(bestpop.gen, 3, 3);
-            row[4] = Genetika.pinalti4(bestpop.gen, 3, 3, idPerawatLibur, tanggalLibur);
+            row[1] = Genetika.pinalti1(bestpop.gen);
+            row[2] = Genetika.pinalti2(bestpop.gen,dataperawathash, dataperawathash.size());
+            row[3] = Genetika.pinalti3(bestpop.gen);
+            row[4] = Genetika.pinalti4(bestpop.gen,idPerawatLibur, tanggalLibur);
             row[5] = bestpop.fitness;
             model.addRow(row);
 

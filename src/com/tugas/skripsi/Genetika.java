@@ -86,19 +86,24 @@ public class Genetika {
     }
 
 
-    public static int pinalti1(String a, int jumlahshift, int jumlahperawatpershift) {
+    public static int pinalti1(String a) {
+        int jumlahshift = 3;
+        int jumlahperawatpershift = 3;
         //antar shift
         String gen[][] = new String[30 * jumlahshift][jumlahperawatpershift];
         String[] kromosom = a.split(" ");
         
-        int cek[];
-        cek = new int[kromosom.length];
+        String cek[] =  new String[kromosom.length];
         int pinalti1 = 0;
         int pinaltia = 0;
         int pinaltib = 0;
         for (int i = 0; i < kromosom.length; i++) {
-            cek[i] = Integer.parseInt(kromosom[i]);
-        }
+            if(kromosom[i].equals("_")){
+                cek[i] = "";
+            }else{
+                cek[i] = kromosom[i];
+            }
+        }                 
 
         int cek1 = 0;
         for (int i = 0; i < 30 * jumlahshift; i++) {
@@ -115,47 +120,55 @@ public class Genetika {
                 }
             }
         }
-        int k = 0;
-        int l = 0;
-        int gen2[][][] = new int[30][jumlahshift][5];
-        for (int i = 0; i < 30 * jumlahshift; i++) {
-            if (l == jumlahshift) {
-                k++;
-                l = 0;
-            }
-            for (int j = 0; j < jumlahperawatpershift; j++) {
-                gen2[k][l][j + 1] = gen[i][j];
-            }
-            l++;
-        }
-        Arrays.sort(gen2[0][0]);
-        for (k = 0; k < 30; k++) {
-            for (int j = 1; j < 5; j++) {
-                if (Arrays.binarySearch(gen2[k][0],
-                        gen2[k][2][j]) > 0) {
+        // int k = 0;
+        // int l = 0;
+        // String gen2[][][] = new String[30][jumlahshift][5];
+        // for (int i = 0; i < 30 * jumlahshift; i++) {
+        //     if (l == jumlahshift) {
+        //         k++;
+        //         l = 0;
+        //     }
+        //     for (int j = 0; j < jumlahperawatpershift; j++) {
+        //         gen2[k][l][j + 1] = gen[i][j];
+        //     }
+        //     l++;
+        // }
+        // Arrays.sort(gen2[0][0]);
+        // for (k = 0; k < 30; k++) {
+        //     for (int j = 1; j < 5; j++) {
+        //         if (Arrays.binarySearch(gen2[k][0],
+        //                 gen2[k][2][j]) > 0) {
 
-                } else {
-                }
-            }
-        }
+        //         } else {
+        //         }
+        //     }
+        // }
 
         pinalti1 = pinaltia + pinaltib;
         return pinalti1;
     }
 
-    public static int pinalti2(String a, int jumlahshift, int jumlahperawatpershift, int jumlahperawat) {
-        int gen[][] = new int[30*jumlahshift][jumlahperawatpershift];
-        int gen1[][] = new int[30*jumlahshift][jumlahperawatpershift];
+    public static int pinalti2(String a, HashMap<String,String> dataperawat,int jumlahperawat) {
+        int jumlahshift = 3;
+        int jumlahperawatpershift = 3;
+
+        String gen[][] = new String[30*jumlahshift][jumlahperawatpershift];
+        String gen1[][] = new String[30*jumlahshift][jumlahperawatpershift];
+        Object[] perawatsArray = dataperawat.keySet().toArray();
         int perawat[] = new int[jumlahperawat];
         int jmlpinalti[] = new int[jumlahperawat];
         int maxshiftmalam = (int) Math.ceil(23/jumlahshift);
 
         String[] kromosom = a.split(" ");
-        int cek[] = new int[kromosom.length];
+        String cek[] = new String[kromosom.length];
         int pinalti = 0;
 
         for (int i = 0; i < kromosom.length; i++) {
-            cek[i] = Integer.parseInt(kromosom[i]);
+            if(kromosom[i].equals("_")){
+                cek[i] = "";
+            }else{
+                cek[i] = kromosom[i];
+            };
         }
         int cek1 = 0;
         for (int i = 0; i < 30*jumlahshift; i++) {
@@ -172,10 +185,9 @@ public class Genetika {
             }
         }
         for (int i = 2; i < 30*jumlahshift; i = i + 3) {
-            for (int j = 0; j < jumlahperawatpershift; j++) {
+            for (int j = 0; j < jumlahperawatpershift - 1 ; j++) {  //shift malam
                 for (int k = 0; k < jumlahperawat; k++) {
-                    int h = k + 1;
-                    if (h == gen1[i][j]) {
+                    if((String)perawatsArray[k] == gen1[i][j]){
                         perawat[k]++;
                     }
                 }
@@ -192,52 +204,110 @@ public class Genetika {
         return pinalti;
     }
 
-    public static int pinalti3(String a, int jumlahshift, int jumlahperawatpershift){
-        int gen[][] = new int[30*jumlahshift][jumlahperawatpershift];
-        int gen1[][] = new int[30*jumlahshift][jumlahperawatpershift];
+    public static int pinalti3(String a){
+        int jumlahshift = 3;
+        int jumlahperawatpershift = 3;
+
+        String gen[][] = new String[30*jumlahshift][jumlahperawatpershift];
+        String gen1[][] = new String[30*jumlahshift][jumlahperawatpershift];
         String[] kromosom = a.split(" ");
-        int cek[] = new int[kromosom.length];
+        String cek[] = new String[kromosom.length];
         int pinalti3=0;
         for(int i = 0;i < kromosom.length;i++){
-            cek[i] = Integer.parseInt(kromosom[i]);
+            if(kromosom[i].equals("_")){
+                cek[i] = "";
+            }else{
+                cek[i] = kromosom[i];
+            };
         }
         int cek1=0;
+        int state = 0;
         for(int i=0;i<30*jumlahshift;i++){
-            for(int j=0;j<jumlahperawatpershift;j++){
-                gen[i][j]=cek[cek1];
-                gen1[i][j]=gen[i][j];
-                cek1++;
+            if(state == 0){ //shift pagi
+                for(int j=0;j<jumlahperawatpershift;j++){
+                    gen[i][j]=cek[cek1];
+                    gen1[i][j]=gen[i][j];
+                    cek1++;
+                }
+                state += 1;
+            }else if(state == 1){
+                for(int j=0;j<jumlahperawatpershift-1;j++){
+                    gen[i][j]=cek[cek1];
+                    gen1[i][j]=gen[i][j];
+                    cek1++;
+                }
+                state += 1;
+            }else if(state == 2){
+                for(int j=0;j<jumlahperawatpershift-1;j++){
+                    gen[i][j]=cek[cek1];
+                    gen1[i][j]=gen[i][j];
+                    cek1++;
+                }
+                state = 0;
             }
-        }for(int i=0;i<30*jumlahshift;i++){
-            for(int j=0;j<jumlahperawatpershift;j++){
-                for(int k=j+1;k<jumlahperawatpershift;k++){
-                    if(gen[i][j]==gen1[i][k]) {
-                        pinalti3++;
+  
+        }
+
+        state = 0;
+        for(int i=0;i<30*jumlahshift;i++){
+            if(state == 0){ //shift pagi
+                for(int j=0;j<jumlahperawatpershift;j++){
+                    for(int k=j+1;k<jumlahperawatpershift;k++){
+                        if(gen[i][j]==gen1[i][k]) {
+                            pinalti3++;
+                        }
                     }
                 }
+                state += 1;
+            }else if(state == 1){
+                for(int j=0;j<jumlahperawatpershift-1;j++){
+                    for(int k=j+1;k<jumlahperawatpershift-1;k++){
+                        if(gen[i][j]==gen1[i][k]) {
+                            pinalti3++;
+                        }
+                    }
+                }
+                state += 1;
+            }else if(state == 2){
+                for(int j=0;j<jumlahperawatpershift-1;j++){
+                    for(int k=j+1;k<jumlahperawatpershift-1;k++){
+                        if(gen[i][j]==gen1[i][k]) {
+                            pinalti3++;
+                        }
+                    }
+                }
+                state = 0;
             }
+
         }
         return pinalti3;
     }
 
-    public static int pinalti4(String a, int jumlahshift, int jumlahperawatpershift, String []idP, String []tgl){
+    public static int pinalti4(String a, String []idP, String []tgl){
+        int jumlahshift = 3;
+        int jumlahperawatpershift = 3;
+
         String idPer[]=new String[idP.length];
-        int temp_id[] = new int[idP.length];
+        String temp_id[] = new String[idP.length];
         int temp_tgl[] = new int[tgl.length];
         int temp_pinalti4[]= new int[idP.length];
         int pinalti4=0;
 
         for(int i=0; i<idPer.length; i++){
             int pinalti=0;
-            temp_id[i]=Integer.parseInt(idP[i]);
+            temp_id[i]=idP[i];
             temp_tgl[i]=Integer.parseInt(tgl[i]);
-            int no=temp_id[i];
+            String no=temp_id[i];
             int tanggal=temp_tgl[i];
-            int gen[][] = new int[30][jumlahshift*jumlahperawatpershift];
+            String gen[][] = new String[30][jumlahshift*jumlahperawatpershift];
             String[] kromosom = a.split(" ");
-            int cek[] = new int[kromosom.length];
+            String cek[] = new String[kromosom.length];
             for(int j = 0;j < kromosom.length;j++){
-                cek[j] = Integer.parseInt(kromosom[j]);
+                if(kromosom[i].equals("_")){
+                    cek[i] = "";
+                }else{
+                    cek[i] = kromosom[i];
+                };
             }
             int cek1=0;
             for(int j=0;j<30;j++){
@@ -295,16 +365,18 @@ public class Genetika {
     public static String mutasi(int titik1, int titik2, String p, int jumlahshift, int jumlahperawatpershift) {
         String anak = "";
         String[] pisah = p.split(" ");
-        int[] anak3 = new int[30*jumlahshift*jumlahperawatpershift];
-        int[] temp = new int[30*jumlahshift*jumlahperawatpershift];
+        String[] anak3 = new String[30*jumlahshift*jumlahperawatpershift];
+        String[] temp = new String[30*jumlahshift*jumlahperawatpershift];
         for (int i = 0; i < pisah.length; i++) {
             if (i < anak3.length) {
-                anak3[i] = Integer.parseInt(pisah[i]);
-                temp[i] = Integer.parseInt(pisah[i]);
+                anak3[i] = pisah[i];
+                temp[i] = pisah[i];
             }
         }
-        anak3[titik1] = temp[titik2];
-        anak3[titik2] = temp[titik1];
+        if(!anak3[titik1].equals("_") || !temp[titik1].equals("_") ){ //skip jika salah satu berisi _
+            anak3[titik1] = temp[titik2];
+            anak3[titik2] = temp[titik1];
+        }
         for (int i = 0; i < pisah.length; i++) {
             if (i < anak3.length) {
                 anak += anak3[i];
